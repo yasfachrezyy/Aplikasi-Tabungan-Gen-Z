@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Masa Depan Yasfa dan afina cantik</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --yasfa-color: #3b82f6;
+            --afina-color: #f472b6;
+            --seabank-orange: #ff5722;
+            --glass: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); 
+            color: white; min-height: 100vh; display: flex; justify-content: center; align-items: center; overflow-x: hidden;
+        }
+
+        /* --- LANDING PAGE --- */
+        #landing-page { text-align: center; padding: 2rem; max-width: 600px; animation: fadeIn 1s ease-in; }
+        .hero-title { font-size: 3rem; font-weight: 800; margin-bottom: 1rem; letter-spacing: -2px; }
+        .hero-title span { background: linear-gradient(90deg, var(--yasfa-color), var(--afina-color)); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-subtitle { font-size: 1rem; opacity: 0.7; margin-bottom: 2.5rem; }
+
+        /* --- MODAL TRANSFER --- */
+        #transfer-modal {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(12px); z-index: 200; align-items: center; justify-content: center;
+        }
+        .modal-content {
+            background: #1e293b; padding: 2.5rem 2rem; border-radius: 30px; border: 1px solid var(--seabank-orange);
+            width: 90%; max-width: 400px; text-align: center; box-shadow: 0 0 40px rgba(255, 87, 34, 0.2);
+            animation: slideUp 0.4s ease-out;
+        }
+        .rekening-box {
+            background: rgba(255, 87, 34, 0.1); padding: 1.2rem; border-radius: 15px; 
+            margin: 1.5rem 0; border: 1px dashed var(--seabank-orange); cursor: pointer; transition: 0.3s;
+        }
+
+        /* --- BUTTONS --- */
+        .btn-main { 
+            width: 100%; padding: 16px; border-radius: 16px; border: none; 
+            background: linear-gradient(90deg, var(--yasfa-color), var(--afina-color)); 
+            color: white; font-weight: 800; cursor: pointer; transition: 0.3s; text-transform: uppercase;
+        }
+        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(244, 114, 182, 0.3); }
+        
+        #login-screen, #dashboard { display: none; width: 90%; max-width: 400px; }
+        #dashboard { max-width: 1000px; padding: 2rem 0; }
+
+        /* --- GLASS INPUT & SELECT --- */
+        input, select { 
+            width: 100%; padding: 14px; border-radius: 14px; 
+            border: 1px solid rgba(255,255,255,0.1); 
+            background: rgba(255,255,255,0.05); color: white; outline: none; 
+            appearance: none; -webkit-appearance: none; margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Tampilan Option agar tidak putih */
+        select option {
+            background: #1e293b; 
+            color: white;
+            padding: 10px;
+        }
+
+        .select-wrapper { position: relative; }
+        .select-wrapper::after {
+            content: '▼'; font-size: 0.7rem; position: absolute;
+            right: 15px; top: 22px; pointer-events: none; opacity: 0.4;
+        }
+
+        .card { background: var(--glass); backdrop-filter: blur(15px); padding: 1.5rem; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 1rem; }
+        .tag-yasfa { color: var(--yasfa-color); font-weight: 800; }
+        .tag-afina { color: var(--afina-color); font-weight: 800; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <div id="landing-page">
+        <h1 class="hero-title">Membangun Masa Depan <span>Bersama</span></h1>
+        <p class="hero-subtitle">Sesuatu yang besar dimulai dari langkah kecil yang dilakukan bersama-sama.</p>
+        <button class="btn-main" onclick="openModal()">Mulai Menabung</button>
+    </div>
+
+    <div id="transfer-modal">
+        <div class="modal-content">
+            <h2 style="color: var(--seabank-orange); margin-bottom: 10px;">Cek Saldo</h2>
+            <p style="font-size: 0.9rem; opacity: 0.8;">Pastikan kamu sudah transfer ke rekening SeaBank bersama sebelum mencatat.</p>
+            
+            <div class="rekening-box" onclick="copyRek()">
+                <small style="opacity: 0.6;">Klik untuk salin no. rekening</small>
+                <h3 id="no-rek" style="margin-top: 5px; letter-spacing: 1px;">901317404210</h3>
+                <p style="font-size: 0.7rem; color: var(--afina-color); margin-top: 5px; font-weight: bold;">A/N Muhammad Yasyfa Al Fachrezi</p>
+            </div>
+
+            <button class="btn-main" style="background: var(--seabank-orange); margin-bottom: 12px;" onclick="alert('Ayo transfer dulu ya, biar tabungan kita makin banyak')">Belum Transfer</button>
+            <button class="btn-main" style="background: #4ade80;" onclick="showLogin()">Sudah Transfer</button>
+            <p style="margin-top: 20px; font-size: 0.8rem; cursor: pointer; opacity: 0.5;" onclick="closeModal()">Nanti Saja</p>
+        </div>
+    </div>
+
+    <div id="login-screen" class="card" style="text-align: center;">
+        <h2 style="margin-bottom: 1.5rem;">Yasfin Bank</h2>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button class="btn-main" onclick="login()">Buka Akses</button>
+    </div>
+
+    <div id="dashboard">
+        <button style="position: fixed; top: 20px; right: 20px; padding: 10px 15px; border-radius: 12px; background: rgba(248,113,113,0.15); color: #f87171; border: 1px solid rgba(248,113,113,0.3); cursor: pointer; font-weight: 800; backdrop-filter: blur(10px); z-index: 100;" onclick="location.reload()">Logout</button>
+        
+        <div class="card" style="text-align: center; background: linear-gradient(45deg, rgba(59,130,246,0.1), rgba(244,114,182,0.1));">
+            <p>Saldo Gabungan</p>
+            <h1 style="font-size: 3rem; font-weight: 800; margin: 10px 0;" id="totalBalance">Rp 0</h1>
+            <div style="display: flex; justify-content: center; gap: 40px;">
+                <div><small>Yasfa</small><p id="yasfaTotal" class="tag-yasfa">Rp 0</p></div>
+                <div><small>afina cantik</small><p id="afinaTotal" class="tag-afina">Rp 0</p></div>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+            <div class="card">
+                <h3>Input Transaksi</h3>
+                <input type="number" id="amount" placeholder="Nominal Rp" style="margin-top: 1rem;">
+                <div class="select-wrapper">
+                    <select id="user">
+                        <option value="" selected disabled>Pilih Penabung</option>
+                        <option value="yasfa">Yasfa</option>
+                        <option value="afina">afina cantik</option>
+                    </select>
+                </div>
+                <div class="select-wrapper">
+                    <select id="type">
+                        <option value="" selected disabled>Jenis Transaksi</option>
+                        <option value="in">Pemasukan (+)</option>
+                        <option value="out">Pengeluaran (-)</option>
+                    </select>
+                </div>
+                <button class="btn-main" onclick="saveToFirebase()">Simpan</button>
+            </div>
+            <div class="card">
+                <h3>Statistik</h3>
+                <div style="height: 200px;"><canvas id="savingsChart"></canvas></div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 1rem;">
+            <h3>Riwayat Kita</h3>
+            <div id="history" style="max-height: 300px; overflow-y: auto; margin-top: 1rem;"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAXHfN62hjsbkrMQSFHVxE2dZBztiCs2CA",
+            authDomain: "tabungan-yasfin.firebaseapp.com",
+            databaseURL: "https://tabungan-yasfin-default-rtdb.asia-southeast1.firebasedatabase.app/",
+            projectId: "tabungan-yasfin",
+            storageBucket: "tabungan-yasfin.firebasestorage.app",
+            messagingSenderId: "1023595912835",
+            appId: "1:1023595912835:web:18b91d83fbaee0d28805b6"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const dbRef = ref(db, 'transaksi');
+
+        window.openModal = () => document.getElementById('transfer-modal').style.display = 'flex';
+        window.closeModal = () => document.getElementById('transfer-modal').style.display = 'none';
+        
+        window.copyRek = () => {
+            const rek = document.getElementById('no-rek').innerText;
+            navigator.clipboard.writeText(rek);
+            alert("Nomor rekening berhasil disalin");
+        };
+
+        window.showLogin = () => {
+            closeModal();
+            document.getElementById('landing-page').style.display = 'none';
+            document.getElementById('login-screen').style.display = 'block';
+        };
+
+        window.login = () => {
+            const u = document.getElementById('username').value.toLowerCase();
+            const p = document.getElementById('password').value;
+            if(u === "yasfin" && p === "091019") {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                loadData();
+            } else { alert("Akses ditolak"); }
+        };
+
+        window.saveToFirebase = () => {
+            const amt = parseInt(document.getElementById('amount').value);
+            const user = document.getElementById('user').value;
+            const type = document.getElementById('type').value;
+            if(!amt || !user || !type) return alert("Lengkapi data dulu");
+
+            push(dbRef, {
+                amount: type === 'out' ? -amt : amt,
+                user: user,
+                date: new Date().toLocaleDateString('id-ID', {day:'numeric', month:'short'}),
+                timestamp: Date.now()
+            });
+            document.getElementById('amount').value = '';
+            document.getElementById('user').selectedIndex = 0;
+            document.getElementById('type').selectedIndex = 0;
+        };
+
+        function loadData() {
+            onValue(dbRef, (snapshot) => {
+                const data = snapshot.val();
+                const list = [];
+                for(let id in data) list.push(data[id]);
+                updateUI(list);
+            });
+        }
+
+        let myChart;
+        function updateUI(data) {
+            const historyEl = document.getElementById('history');
+            let total = 0, yTotal = 0, aTotal = 0;
+            historyEl.innerHTML = '';
+            const sortedData = [...data].sort((a,b) => b.timestamp - a.timestamp);
+
+            sortedData.forEach(t => {
+                total += t.amount;
+                if(t.user === 'yasfa') yTotal += t.amount;
+                else aTotal += t.amount;
+                const item = document.createElement('div');
+                item.style.cssText = "display:flex; justify-content:space-between; padding:12px; border-bottom:1px solid rgba(255,255,255,0.05); font-size:0.9rem;";
+                item.innerHTML = `<span><b class="tag-${t.user}">${t.user === 'yasfa' ? 'Yasfa' : 'afina cantik'}</b><br><small style="opacity:0.5">${t.date}</small></span><span style="color:${t.amount >= 0 ? '#4ade80' : '#f87171'}; font-weight:bold;">${t.amount >= 0 ? '+' : ''}${t.amount.toLocaleString('id-ID')}</span>`;
+                historyEl.appendChild(item);
+            });
+
+            document.getElementById('totalBalance').innerText = `Rp ${total.toLocaleString('id-ID')}`;
+            document.getElementById('yasfaTotal').innerText = `Rp ${yTotal.toLocaleString('id-ID')}`;
+            document.getElementById('afinaTotal').innerText = `Rp ${aTotal.toLocaleString('id-ID')}`;
+
+            const ctx = document.getElementById('savingsChart').getContext('2d');
+            if(myChart) myChart.destroy();
+            myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Yasfa', 'afina cantik'],
+                    datasets: [{ data: [Math.max(0, yTotal), Math.max(0, aTotal)], backgroundColor: ['#3b82f6', '#f472b6'], borderWidth: 0 }]
+                },
+                options: { maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: 'white' } } } }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -41,7 +41,7 @@
             margin: 1.5rem 0; border: 1px dashed var(--seabank-orange); cursor: pointer; transition: 0.3s;
         }
 
-        /* --- BUTTONS --- */
+        /* --- UI COMPONENTS --- */
         .btn-main { 
             width: 100%; padding: 16px; border-radius: 16px; border: none; 
             background: linear-gradient(90deg, var(--yasfa-color), var(--afina-color)); 
@@ -52,26 +52,33 @@
         #login-screen, #dashboard { display: none; width: 90%; max-width: 400px; }
         #dashboard { max-width: 1000px; padding: 2rem 0; }
 
-        /* --- GLASS INPUT & SELECT --- */
+        /* Input Container with Clear Button */
+        .input-container { position: relative; width: 100%; margin-bottom: 1rem; }
+        
         input, select { 
-            width: 100%; padding: 14px; border-radius: 14px; 
-            border: 1px solid rgba(255,255,255,0.1); 
-            background: rgba(255,255,255,0.05); color: white; outline: none; 
-            appearance: none; -webkit-appearance: none; margin-bottom: 1rem;
+            width: 100%; padding: 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.1); 
+            background: rgba(255,255,255,0.05); color: white; outline: none; appearance: none;
             backdrop-filter: blur(10px);
         }
-
-        /* Tampilan Option agar tidak putih */
-        select option {
-            background: #1e293b; 
-            color: white;
-            padding: 10px;
+        
+        /* Tombol X (Clear) */
+        .clear-btn {
+            position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
+            color: rgba(255,255,255,0.4); cursor: pointer; display: none;
+            font-size: 1.2rem; font-weight: bold;
         }
 
-        .select-wrapper { position: relative; }
+        .chips-container { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.5rem; margin-top: -0.5rem; }
+        .chip {
+            background: rgba(255,255,255,0.1); padding: 8px 12px; border-radius: 10px;
+            font-size: 0.75rem; cursor: pointer; border: 1px solid rgba(255,255,255,0.1);
+        }
+        .chip:hover { border-color: var(--afina-color); }
+
+        .select-wrapper { position: relative; margin-bottom: 1rem; }
         .select-wrapper::after {
             content: '▼'; font-size: 0.7rem; position: absolute;
-            right: 15px; top: 22px; pointer-events: none; opacity: 0.4;
+            right: 15px; top: 50%; transform: translateY(-50%); pointer-events: none; opacity: 0.4;
         }
 
         .card { background: var(--glass); backdrop-filter: blur(15px); padding: 1.5rem; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 1rem; }
@@ -94,13 +101,11 @@
         <div class="modal-content">
             <h2 style="color: var(--seabank-orange); margin-bottom: 10px;">Cek Saldo</h2>
             <p style="font-size: 0.9rem; opacity: 0.8;">Pastikan kamu sudah transfer ke rekening SeaBank bersama sebelum mencatat.</p>
-            
             <div class="rekening-box" onclick="copyRek()">
                 <small style="opacity: 0.6;">Klik untuk salin no. rekening</small>
                 <h3 id="no-rek" style="margin-top: 5px; letter-spacing: 1px;">901317404210</h3>
                 <p style="font-size: 0.7rem; color: var(--afina-color); margin-top: 5px; font-weight: bold;">A/N Muhammad Yasyfa Al Fachrezi</p>
             </div>
-
             <button class="btn-main" style="background: var(--seabank-orange); margin-bottom: 12px;" onclick="alert('Ayo transfer dulu ya, biar tabungan kita makin banyak')">Belum Transfer</button>
             <button class="btn-main" style="background: #4ade80;" onclick="showLogin()">Sudah Transfer</button>
             <p style="margin-top: 20px; font-size: 0.8rem; cursor: pointer; opacity: 0.5;" onclick="closeModal()">Nanti Saja</p>
@@ -109,8 +114,8 @@
 
     <div id="login-screen" class="card" style="text-align: center;">
         <h2 style="margin-bottom: 1.5rem;">Yasfin Bank</h2>
-        <input type="text" id="username" placeholder="Username">
-        <input type="password" id="password" placeholder="Password">
+        <input type="text" id="username" placeholder="Username" style="margin-bottom: 1rem;">
+        <input type="password" id="password" placeholder="Password" style="margin-bottom: 1rem;">
         <button class="btn-main" onclick="login()">Buka Akses</button>
     </div>
 
@@ -129,7 +134,20 @@
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
             <div class="card">
                 <h3>Input Transaksi</h3>
-                <input type="number" id="amount" placeholder="Nominal Rp" style="margin-top: 1rem;">
+                <div class="input-container" style="margin-top: 1rem;">
+                    <input type="text" id="amount" placeholder="Nominal Rp" oninput="handleInput(this)">
+                    <span id="clear-amount" class="clear-btn" onclick="clearInput()">×</span>
+                </div>
+                
+                <div class="chips-container">
+                    <div class="chip" onclick="setAmount(50000)">50.000</div>
+                    <div class="chip" onclick="setAmount(100000)">100.000</div>
+                    <div class="chip" onclick="setAmount(150000)">150.000</div>
+                    <div class="chip" onclick="setAmount(200000)">200.000</div>
+                    <div class="chip" onclick="setAmount(500000)">500.000</div>
+                    <div class="chip" onclick="setAmount(1000000)">1.000.000</div>
+                </div>
+
                 <div class="select-wrapper">
                     <select id="user">
                         <option value="" selected disabled>Pilih Penabung</option>
@@ -176,6 +194,38 @@
         const db = getDatabase(app);
         const dbRef = ref(db, 'transaksi');
 
+        // Gabungan Fungsi Input Format & Toggle Tombol X
+        window.handleInput = (el) => {
+            // Format Rupiah
+            let val = el.value.replace(/[^,\d]/g, '').toString();
+            let split = val.split(',');
+            let sisa = split[0].length % 3;
+            let rupiah = split[0].substr(0, sisa);
+            let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                let separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+            el.value = rupiah;
+
+            // Toggle Tombol X
+            const clearBtn = document.getElementById('clear-amount');
+            clearBtn.style.display = el.value.length > 0 ? 'block' : 'none';
+        };
+
+        window.clearInput = () => {
+            const input = document.getElementById('amount');
+            input.value = '';
+            document.getElementById('clear-amount').style.display = 'none';
+        };
+
+        window.setAmount = (val) => {
+            const input = document.getElementById('amount');
+            input.value = val.toLocaleString('id-ID');
+            document.getElementById('clear-amount').style.display = 'block';
+        };
+
         window.openModal = () => document.getElementById('transfer-modal').style.display = 'flex';
         window.closeModal = () => document.getElementById('transfer-modal').style.display = 'none';
         
@@ -202,9 +252,11 @@
         };
 
         window.saveToFirebase = () => {
-            const amt = parseInt(document.getElementById('amount').value);
+            const cleanVal = document.getElementById('amount').value.replace(/\./g, '');
+            const amt = parseInt(cleanVal);
             const user = document.getElementById('user').value;
             const type = document.getElementById('type').value;
+
             if(!amt || !user || !type) return alert("Lengkapi data dulu");
 
             push(dbRef, {
@@ -213,7 +265,7 @@
                 date: new Date().toLocaleDateString('id-ID', {day:'numeric', month:'short'}),
                 timestamp: Date.now()
             });
-            document.getElementById('amount').value = '';
+            clearInput();
             document.getElementById('user').selectedIndex = 0;
             document.getElementById('type').selectedIndex = 0;
         };

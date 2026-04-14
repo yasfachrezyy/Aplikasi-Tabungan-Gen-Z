@@ -222,7 +222,6 @@
             } else { alert("Akses ditolak"); }
         };
 
-        // FIXED: Nama fungsi ini dipanggil oleh tombol simpan
         window.saveToSupabase = async () => {
             const amountInput = document.getElementById('amount').value;
             const cleanVal = amountInput.replace(/\./g, '');
@@ -242,7 +241,7 @@
             if(error) {
                 alert("Gagal simpan: " + error.message);
             } else {
-                alert("Data berhasil disimpan!");
+                alert("Berhasil! Semangat terus ya nabungnya buat kita.");
                 clearInput();
                 document.getElementById('user').selectedIndex = 0;
                 document.getElementById('type').selectedIndex = 0;

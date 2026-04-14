@@ -52,16 +52,13 @@
         #login-screen, #dashboard { display: none; width: 90%; max-width: 400px; }
         #dashboard { max-width: 1000px; padding: 2rem 0; }
 
-        /* Input Container with Clear Button */
         .input-container { position: relative; width: 100%; margin-bottom: 1rem; }
-        
         input, select { 
             width: 100%; padding: 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.1); 
             background: rgba(255,255,255,0.05); color: white; outline: none; appearance: none;
             backdrop-filter: blur(10px);
         }
         
-        /* Tombol X (Clear) */
         .clear-btn {
             position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
             color: rgba(255,255,255,0.4); cursor: pointer; display: none;
@@ -69,17 +66,11 @@
         }
 
         .chips-container { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.5rem; margin-top: -0.5rem; }
-        .chip {
-            background: rgba(255,255,255,0.1); padding: 8px 12px; border-radius: 10px;
-            font-size: 0.75rem; cursor: pointer; border: 1px solid rgba(255,255,255,0.1);
-        }
-        .chip:hover { border-color: var(--afina-color); }
+        .chip { background: rgba(255,255,255,0.1); padding: 8px 12px; border-radius: 10px; font-size: 0.75rem; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); }
 
         .select-wrapper { position: relative; margin-bottom: 1rem; }
-        .select-wrapper::after {
-            content: '▼'; font-size: 0.7rem; position: absolute;
-            right: 15px; top: 50%; transform: translateY(-50%); pointer-events: none; opacity: 0.4;
-        }
+        .select-wrapper::after { content: '▼'; font-size: 0.7rem; position: absolute; right: 15px; top: 50%; transform: translateY(-50%); pointer-events: none; opacity: 0.4; }
+        select option { background: #1e293b; color: white; }
 
         .card { background: var(--glass); backdrop-filter: blur(15px); padding: 1.5rem; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 1rem; }
         .tag-yasfa { color: var(--yasfa-color); font-weight: 800; }
@@ -162,7 +153,7 @@
                         <option value="out">Pengeluaran (-)</option>
                     </select>
                 </div>
-                <button class="btn-main" onclick="saveToFirebase()">Simpan</button>
+                <button class="btn-main" onclick="saveToSupabase()">Simpan</button>
             </div>
             <div class="card">
                 <h3>Statistik</h3>
@@ -177,41 +168,24 @@
     </div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyAXHfN62hjsbkrMQSFHVxE2dZBztiCs2CA",
-            authDomain: "tabungan-yasfin.firebaseapp.com",
-            databaseURL: "https://tabungan-yasfin-default-rtdb.asia-southeast1.firebasedatabase.app/",
-            projectId: "tabungan-yasfin",
-            storageBucket: "tabungan-yasfin.firebasestorage.app",
-            messagingSenderId: "1023595912835",
-            appId: "1:1023595912835:web:18b91d83fbaee0d28805b6"
-        };
+        const supabaseUrl = 'https://tcurfailcjlxanmajaqo.supabase.co'
+        const supabaseKey = 'sb_publishable_aIbD7R8Da_ruysWiSVemKQ_68s5I4wB'
+        const supabase = createClient(supabaseUrl, supabaseKey)
 
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-        const dbRef = ref(db, 'transaksi');
-
-        // Gabungan Fungsi Input Format & Toggle Tombol X
         window.handleInput = (el) => {
-            // Format Rupiah
             let val = el.value.replace(/[^,\d]/g, '').toString();
             let split = val.split(',');
             let sisa = split[0].length % 3;
             let rupiah = split[0].substr(0, sisa);
             let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-
             if (ribuan) {
                 let separator = sisa ? '.' : '';
                 rupiah += separator + ribuan.join('.');
             }
             el.value = rupiah;
-
-            // Toggle Tombol X
-            const clearBtn = document.getElementById('clear-amount');
-            clearBtn.style.display = el.value.length > 0 ? 'block' : 'none';
+            document.getElementById('clear-amount').style.display = el.value.length > 0 ? 'block' : 'none';
         };
 
         window.clearInput = () => {
@@ -221,17 +195,14 @@
         };
 
         window.setAmount = (val) => {
-            const input = document.getElementById('amount');
-            input.value = val.toLocaleString('id-ID');
+            document.getElementById('amount').value = val.toLocaleString('id-ID');
             document.getElementById('clear-amount').style.display = 'block';
         };
 
         window.openModal = () => document.getElementById('transfer-modal').style.display = 'flex';
         window.closeModal = () => document.getElementById('transfer-modal').style.display = 'none';
-        
         window.copyRek = () => {
-            const rek = document.getElementById('no-rek').innerText;
-            navigator.clipboard.writeText(rek);
+            navigator.clipboard.writeText(document.getElementById('no-rek').innerText);
             alert("Nomor rekening berhasil disalin");
         };
 
@@ -251,32 +222,41 @@
             } else { alert("Akses ditolak"); }
         };
 
-        window.saveToFirebase = () => {
-            const cleanVal = document.getElementById('amount').value.replace(/\./g, '');
+        // FIXED: Nama fungsi ini dipanggil oleh tombol simpan
+        window.saveToSupabase = async () => {
+            const amountInput = document.getElementById('amount').value;
+            const cleanVal = amountInput.replace(/\./g, '');
             const amt = parseInt(cleanVal);
             const user = document.getElementById('user').value;
             const type = document.getElementById('type').value;
 
             if(!amt || !user || !type) return alert("Lengkapi data dulu");
 
-            push(dbRef, {
-                amount: type === 'out' ? -amt : amt,
-                user: user,
+            const { error } = await supabase.from('transaksi').insert([{ 
+                amount: type === 'out' ? -amt : amt, 
+                user: user, 
                 date: new Date().toLocaleDateString('id-ID', {day:'numeric', month:'short'}),
-                timestamp: Date.now()
-            });
-            clearInput();
-            document.getElementById('user').selectedIndex = 0;
-            document.getElementById('type').selectedIndex = 0;
+                timestamp: Date.now() 
+            }]);
+
+            if(error) {
+                alert("Gagal simpan: " + error.message);
+            } else {
+                alert("Data berhasil disimpan!");
+                clearInput();
+                document.getElementById('user').selectedIndex = 0;
+                document.getElementById('type').selectedIndex = 0;
+            }
         };
 
-        function loadData() {
-            onValue(dbRef, (snapshot) => {
-                const data = snapshot.val();
-                const list = [];
-                for(let id in data) list.push(data[id]);
-                updateUI(list);
-            });
+        async function loadData() {
+            fetchInitial();
+            supabase.channel('db-changes').on('postgres_changes', { event: '*', schema: 'public', table: 'transaksi' }, () => fetchInitial()).subscribe();
+        }
+
+        async function fetchInitial() {
+            const { data, error } = await supabase.from('transaksi').select('*').order('timestamp', { ascending: false });
+            if(!error) updateUI(data);
         }
 
         let myChart;
@@ -284,9 +264,7 @@
             const historyEl = document.getElementById('history');
             let total = 0, yTotal = 0, aTotal = 0;
             historyEl.innerHTML = '';
-            const sortedData = [...data].sort((a,b) => b.timestamp - a.timestamp);
-
-            sortedData.forEach(t => {
+            data.forEach(t => {
                 total += t.amount;
                 if(t.user === 'yasfa') yTotal += t.amount;
                 else aTotal += t.amount;
@@ -295,7 +273,6 @@
                 item.innerHTML = `<span><b class="tag-${t.user}">${t.user === 'yasfa' ? 'Yasfa' : 'afina cantik'}</b><br><small style="opacity:0.5">${t.date}</small></span><span style="color:${t.amount >= 0 ? '#4ade80' : '#f87171'}; font-weight:bold;">${t.amount >= 0 ? '+' : ''}${t.amount.toLocaleString('id-ID')}</span>`;
                 historyEl.appendChild(item);
             });
-
             document.getElementById('totalBalance').innerText = `Rp ${total.toLocaleString('id-ID')}`;
             document.getElementById('yasfaTotal').innerText = `Rp ${yTotal.toLocaleString('id-ID')}`;
             document.getElementById('afinaTotal').innerText = `Rp ${aTotal.toLocaleString('id-ID')}`;

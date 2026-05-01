@@ -153,7 +153,7 @@
                         <option value="out">Pengeluaran (-)</option>
                     </select>
                 </div>
-                <button class="btn-main" onclick="saveToSupabase()">Simpan</button>
+                <button class="btn-main" onclick="saveToFirestore()">Simpan</button>
             </div>
             <div class="card">
                 <h3>Statistik</h3>
@@ -168,11 +168,23 @@
     </div>
 
     <script type="module">
-        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        const supabaseUrl = 'https://tcurfailcjlxanmajaqo.supabase.co'
-        const supabaseKey = 'sb_publishable_aIbD7R8Da_ruysWiSVemKQ_68s5I4wB'
-        const supabase = createClient(supabaseUrl, supabaseKey)
+        const firebaseConfig = {
+            apiKey: "AIzaSyAXHfN62hjsbkrMQSFHVxE2dZBztiCs2CA",
+            authDomain: "tabungan-yasfin.firebaseapp.com",
+            databaseURL: "https://tabungan-yasfin-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "tabungan-yasfin",
+            storageBucket: "tabungan-yasfin.firebasestorage.app",
+            messagingSenderId: "1023595912835",
+            appId: "1:1023595912835:web:18b91d83fbaee0d28805b6",
+            measurementId: "G-77DZ8FSCW3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const dbRef = collection(db, "transaksi");
 
         window.handleInput = (el) => {
             let val = el.value.replace(/[^,\d]/g, '').toString();
@@ -222,7 +234,7 @@
             } else { alert("Akses ditolak"); }
         };
 
-        window.saveToSupabase = async () => {
+        window.saveToFirestore = async () => {
             const amountInput = document.getElementById('amount').value;
             const cleanVal = amountInput.replace(/\./g, '');
             const amt = parseInt(cleanVal);
@@ -231,31 +243,33 @@
 
             if(!amt || !user || !type) return alert("Lengkapi data dulu");
 
-            const { error } = await supabase.from('transaksi').insert([{ 
-                amount: type === 'out' ? -amt : amt, 
-                user: user, 
-                date: new Date().toLocaleDateString('id-ID', {day:'numeric', month:'short'}),
-                timestamp: Date.now() 
-            }]);
-
-            if(error) {
-                alert("Gagal simpan: " + error.message);
-            } else {
+            try {
+                await addDoc(dbRef, { 
+                    amount: type === 'out' ? -amt : amt, 
+                    user: user, 
+                    date: new Date().toLocaleDateString('id-ID', {day:'numeric', month:'short'}),
+                    timestamp: Date.now() 
+                });
+                
                 alert("Berhasil! Semangat terus ya nabungnya buat kita.");
                 clearInput();
                 document.getElementById('user').selectedIndex = 0;
                 document.getElementById('type').selectedIndex = 0;
+            } catch (error) {
+                alert("Gagal simpan: " + error.message);
             }
         };
 
-        async function loadData() {
-            fetchInitial();
-            supabase.channel('db-changes').on('postgres_changes', { event: '*', schema: 'public', table: 'transaksi' }, () => fetchInitial()).subscribe();
-        }
-
-        async function fetchInitial() {
-            const { data, error } = await supabase.from('transaksi').select('*').order('timestamp', { ascending: false });
-            if(!error) updateUI(data);
+        function loadData() {
+            const q = query(dbRef, orderBy("timestamp", "desc"));
+            // onSnapshot menghandle realtime secara otomatis
+            onSnapshot(q, (snapshot) => {
+                const allData = [];
+                snapshot.forEach((doc) => {
+                    allData.push(doc.data());
+                });
+                updateUI(allData);
+            });
         }
 
         let myChart;
@@ -263,15 +277,18 @@
             const historyEl = document.getElementById('history');
             let total = 0, yTotal = 0, aTotal = 0;
             historyEl.innerHTML = '';
+            
             data.forEach(t => {
                 total += t.amount;
                 if(t.user === 'yasfa') yTotal += t.amount;
                 else aTotal += t.amount;
+                
                 const item = document.createElement('div');
                 item.style.cssText = "display:flex; justify-content:space-between; padding:12px; border-bottom:1px solid rgba(255,255,255,0.05); font-size:0.9rem;";
                 item.innerHTML = `<span><b class="tag-${t.user}">${t.user === 'yasfa' ? 'Yasfa' : 'afina cantik'}</b><br><small style="opacity:0.5">${t.date}</small></span><span style="color:${t.amount >= 0 ? '#4ade80' : '#f87171'}; font-weight:bold;">${t.amount >= 0 ? '+' : ''}${t.amount.toLocaleString('id-ID')}</span>`;
                 historyEl.appendChild(item);
             });
+
             document.getElementById('totalBalance').innerText = `Rp ${total.toLocaleString('id-ID')}`;
             document.getElementById('yasfaTotal').innerText = `Rp ${yTotal.toLocaleString('id-ID')}`;
             document.getElementById('afinaTotal').innerText = `Rp ${aTotal.toLocaleString('id-ID')}`;
@@ -282,7 +299,11 @@
                 type: 'doughnut',
                 data: {
                     labels: ['Yasfa', 'afina cantik'],
-                    datasets: [{ data: [Math.max(0, yTotal), Math.max(0, aTotal)], backgroundColor: ['#3b82f6', '#f472b6'], borderWidth: 0 }]
+                    datasets: [{ 
+                        data: [Math.max(0, yTotal), Math.max(0, aTotal)], 
+                        backgroundColor: ['#3b82f6', '#f472b6'], 
+                        borderWidth: 0 
+                    }]
                 },
                 options: { maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: 'white' } } } }
             });

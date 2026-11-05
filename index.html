@@ -10,7 +10,6 @@
         :root {
             --yasfa-color: #3b82f6;
             --afina-color: #f472b6;
-            --seabank-orange: #ff5722;
             --glass: rgba(255, 255, 255, 0.1);
         }
 
@@ -20,26 +19,56 @@
             color: white; min-height: 100vh; display: flex; justify-content: center; align-items: center; overflow-x: hidden;
         }
 
-        /* --- LANDING PAGE --- */
+        /* --- ANIMATIONS --- */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes pulseGlow { 0% { box-shadow: 0 0 15px rgba(244,114,182,0.2); } 50% { box-shadow: 0 0 25px rgba(59,130,246,0.5); } 100% { box-shadow: 0 0 15px rgba(244,114,182,0.2); } }
+
+        /* --- LANDING PAGE & MODAL --- */
         #landing-page { text-align: center; padding: 2rem; max-width: 600px; animation: fadeIn 1s ease-in; }
         .hero-title { font-size: 3rem; font-weight: 800; margin-bottom: 1rem; letter-spacing: -2px; }
         .hero-title span { background: linear-gradient(90deg, var(--yasfa-color), var(--afina-color)); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .hero-subtitle { font-size: 1rem; opacity: 0.7; margin-bottom: 2.5rem; }
 
-        /* --- MODAL TRANSFER --- */
         #transfer-modal {
             display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85);
             backdrop-filter: blur(12px); z-index: 200; align-items: center; justify-content: center;
         }
         .modal-content {
-            background: #1e293b; padding: 2.5rem 2rem; border-radius: 30px; border: 1px solid var(--seabank-orange);
-            width: 90%; max-width: 400px; text-align: center; box-shadow: 0 0 40px rgba(255, 87, 34, 0.2);
+            background: #1e293b; padding: 2.5rem 2rem; border-radius: 30px; border: 1px solid var(--yasfa-color);
+            width: 90%; max-width: 400px; text-align: center; box-shadow: 0 0 40px rgba(59,130,246, 0.2);
             animation: slideUp 0.4s ease-out;
         }
         .rekening-box {
-            background: rgba(255, 87, 34, 0.1); padding: 1.2rem; border-radius: 15px; 
-            margin: 1.5rem 0; border: 1px dashed var(--seabank-orange); cursor: pointer; transition: 0.3s;
+            background: rgba(59,130,246, 0.1); padding: 1.2rem; border-radius: 15px; 
+            margin: 1.5rem 0; border: 1px dashed var(--yasfa-color); cursor: pointer; transition: 0.3s;
         }
+
+        /* --- YASFIN MAIN CARD --- */
+        .yasfin-card {
+            background: linear-gradient(135deg, var(--yasfa-color), var(--afina-color));
+            border-radius: 20px;
+            padding: 1.5rem;
+            color: white;
+            text-align: left;
+            animation: slideUp 0.5s ease-out, pulseGlow 4s infinite;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        .yasfin-card .top-section p { font-size: 0.9rem; opacity: 0.9; display: flex; align-items: center; gap: 8px;}
+        .yasfin-card .top-section h1 { font-size: 2.5rem; margin: 5px 0 15px 0; letter-spacing: -1px; font-weight: 800; }
+        .yasfin-card .divider { height: 1px; background: rgba(255,255,255,0.3); margin-bottom: 15px; }
+        .yasfin-card .bottom-section { display: flex; justify-content: space-between; }
+        .yasfin-card .bottom-section .half { flex: 1; }
+        .yasfin-card .bottom-section .half p { font-size: 0.8rem; opacity: 0.9; margin-bottom: 3px; font-weight: 600;}
+        .yasfin-card .bottom-section .half h3 { font-size: 1.1rem; margin-bottom: 3px; }
+        
+        /* Eye Icon Style Minimalis */
+        .eye-icon { cursor: pointer; opacity: 0.8; transition: 0.3s; display: flex; align-items: center; }
+        .eye-icon:hover { opacity: 1; transform: scale(1.1); }
+        .eye-icon svg { width: 18px; height: 18px; }
 
         /* --- UI COMPONENTS --- */
         .btn-main { 
@@ -56,28 +85,32 @@
         input, select { 
             width: 100%; padding: 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.1); 
             background: rgba(255,255,255,0.05); color: white; outline: none; appearance: none;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px); transition: 0.3s;
         }
+        input:focus, select:focus { border-color: var(--yasfa-color); background: rgba(255,255,255,0.1); }
         
-        .clear-btn {
-            position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
-            color: rgba(255,255,255,0.4); cursor: pointer; display: none;
-            font-size: 1.2rem; font-weight: bold;
-        }
-
         .chips-container { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.5rem; margin-top: -0.5rem; }
-        .chip { background: rgba(255,255,255,0.1); padding: 8px 12px; border-radius: 10px; font-size: 0.75rem; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); }
+        .chip { background: rgba(255,255,255,0.1); padding: 8px 12px; border-radius: 10px; font-size: 0.75rem; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); transition: 0.2s;}
+        .chip:hover { background: rgba(255,255,255,0.2); border-color: var(--afina-color); }
 
         .select-wrapper { position: relative; margin-bottom: 1rem; }
         .select-wrapper::after { content: '▼'; font-size: 0.7rem; position: absolute; right: 15px; top: 50%; transform: translateY(-50%); pointer-events: none; opacity: 0.4; }
         select option { background: #1e293b; color: white; }
 
-        .card { background: var(--glass); backdrop-filter: blur(15px); padding: 1.5rem; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 1rem; }
+        .card { background: var(--glass); backdrop-filter: blur(15px); padding: 1.5rem; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 1rem; animation: slideUp 0.6s ease-out; }
         .tag-yasfa { color: var(--yasfa-color); font-weight: 800; }
         .tag-afina { color: var(--afina-color); font-weight: 800; }
+        .tag-gabungan { color: #facc15; font-weight: 800; }
         
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        /* Badges riwayat */
+        .badge { padding: 3px 8px; border-radius: 6px; font-size: 0.65rem; font-weight: bold; margin-left: 5px; text-transform: uppercase; }
+        .b-in { background: rgba(74, 222, 128, 0.2); color: #4ade80; }
+        .b-out { background: rgba(248, 113, 113, 0.2); color: #f87171; }
+        .b-depo { background: rgba(250, 204, 21, 0.2); color: #facc15; }
+        
+        /* User Stats under card */
+        .user-stats { display: flex; justify-content: center; gap: 40px; margin-bottom: 1.5rem; animation: fadeIn 1s ease-in; }
+        .user-stats p { font-size: 1.2rem; margin-top: 5px; }
     </style>
 </head>
 <body>
@@ -90,15 +123,18 @@
 
     <div id="transfer-modal">
         <div class="modal-content">
-            <h2 style="color: var(--seabank-orange); margin-bottom: 10px;">Cek Saldo</h2>
-            <p style="font-size: 0.9rem; opacity: 0.8;">Pastikan kamu sudah transfer ke rekening SeaBank bersama sebelum mencatat.</p>
+            <h2 style="color: var(--yasfa-color); margin-bottom: 10px;">Cek Saldo</h2>
+            <p style="font-size: 0.9rem; opacity: 0.8;">Pastikan kamu sudah transfer ke rekening bersama sebelum mencatat.</p>
             <div class="rekening-box" onclick="copyRek()">
                 <small style="opacity: 0.6;">Klik untuk salin no. rekening</small>
                 <h3 id="no-rek" style="margin-top: 5px; letter-spacing: 1px;">901317404210</h3>
                 <p style="font-size: 0.7rem; color: var(--afina-color); margin-top: 5px; font-weight: bold;">A/N Muhammad Yasyfa Al Fachrezi</p>
             </div>
-            <button class="btn-main" style="background: var(--seabank-orange); margin-bottom: 12px;" onclick="alert('Ayo transfer dulu ya, biar tabungan kita makin banyak')">Belum Transfer</button>
-            <button class="btn-main" style="background: #4ade80;" onclick="showLogin()">Sudah Transfer</button>
+            <button class="btn-main" style="background: rgba(255,255,255,0.1); margin-bottom: 12px; color: white;" onclick="alert('Ayo transfer dulu ya, biar tabungan kita makin banyak')">Belum Transfer</button>
+            
+            <!-- Tombol SUDAH TRANSFER disamakan warnanya dengan tombol utama -->
+            <button class="btn-main" onclick="showLogin()">Sudah Transfer</button>
+            
             <p style="margin-top: 20px; font-size: 0.8rem; cursor: pointer; opacity: 0.5;" onclick="closeModal()">Nanti Saja</p>
         </div>
     </div>
@@ -106,31 +142,64 @@
     <div id="login-screen" class="card" style="text-align: center;">
         <h2 style="margin-bottom: 1.5rem;">Yasfin Bank</h2>
         <input type="text" id="username" placeholder="Username" style="margin-bottom: 1rem;">
-        <input type="password" id="password" placeholder="Password" style="margin-bottom: 1rem;">
+        <input type="password" id="password" placeholder="Password" style="margin-bottom: 1rem;" onkeypress="if(event.key === 'Enter') login()">
         <button class="btn-main" onclick="login()">Buka Akses</button>
     </div>
 
     <div id="dashboard">
         <button style="position: fixed; top: 20px; right: 20px; padding: 10px 15px; border-radius: 12px; background: rgba(248,113,113,0.15); color: #f87171; border: 1px solid rgba(248,113,113,0.3); cursor: pointer; font-weight: 800; backdrop-filter: blur(10px); z-index: 100;" onclick="location.reload()">Logout</button>
         
-        <div class="card" style="text-align: center; background: linear-gradient(45deg, rgba(59,130,246,0.1), rgba(244,114,182,0.1));">
-            <p>Saldo Gabungan</p>
-            <h1 style="font-size: 3rem; font-weight: 800; margin: 10px 0;" id="totalBalance">Rp 0</h1>
-            <div style="display: flex; justify-content: center; gap: 40px;">
-                <div><small>Yasfa</small><p id="yasfaTotal" class="tag-yasfa">Rp 0</p></div>
-                <div><small>afina cantik</small><p id="afinaTotal" class="tag-afina">Rp 0</p></div>
+        <!-- YASFIN CARD UI -->
+        <div class="yasfin-card">
+            <div class="top-section">
+                <!-- Icon Mata Minimalis (SVG) -->
+                <p>Total Saldo 
+                    <span class="eye-icon" onclick="toggleSaldo()" id="eye-icon-container">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </span>
+                </p>
+                <h1 id="totalBalance">Rp 0</h1>
             </div>
+            <div class="divider"></div>
+            <div class="bottom-section">
+                <div class="half">
+                    <p>Tabungan ></p>
+                    <h3 id="tabunganTotal">Rp 0</h3>
+                </div>
+                <div class="half">
+                    <p>Deposito ></p>
+                    <h3 id="depositoTotal">Rp 0</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-stats">
+            <div style="text-align:center"><small>Yasfa</small><p id="yasfaTotal" class="tag-yasfa">Rp 0</p></div>
+            <div style="text-align:center"><small>afina cantik</small><p id="afinaTotal" class="tag-afina">Rp 0</p></div>
         </div>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
             <div class="card">
                 <h3>Input Transaksi</h3>
-                <div class="input-container" style="margin-top: 1rem;">
+                
+                <div class="select-wrapper" style="margin-top: 1rem;">
+                    <select id="jenis_transaksi" onchange="toggleFields()">
+                        <option value="nabung" selected>Pemasukan (+)</option>
+                        <option value="tarik">Pengeluaran (-)</option>
+                        <option value="buka_depo">Buka Deposito</option>
+                        <option value="cair_depo">Cairkan Deposito</option>
+                    </select>
+                </div>
+
+                <div class="input-container">
                     <input type="text" id="amount" placeholder="Nominal Rp" oninput="handleInput(this)">
-                    <span id="clear-amount" class="clear-btn" onclick="clearInput()">×</span>
+                </div>
+
+                <div class="input-container" id="wrapper_bunga" style="display: none;">
+                    <input type="text" id="bunga" placeholder="Bunga Rp (Opsional)" oninput="handleInput(this)">
                 </div>
                 
-                <div class="chips-container">
+                <div class="chips-container" id="wrapper_chips">
                     <div class="chip" onclick="setAmount(50000)">50.000</div>
                     <div class="chip" onclick="setAmount(100000)">100.000</div>
                     <div class="chip" onclick="setAmount(150000)">150.000</div>
@@ -139,20 +208,14 @@
                     <div class="chip" onclick="setAmount(1000000)">1.000.000</div>
                 </div>
 
-                <div class="select-wrapper">
+                <div class="select-wrapper" id="wrapper_user">
                     <select id="user">
                         <option value="" selected disabled>Pilih Penabung</option>
                         <option value="yasfa">Yasfa</option>
                         <option value="afina">afina cantik</option>
                     </select>
                 </div>
-                <div class="select-wrapper">
-                    <select id="type">
-                        <option value="" selected disabled>Jenis Transaksi</option>
-                        <option value="in">Pemasukan (+)</option>
-                        <option value="out">Pengeluaran (-)</option>
-                    </select>
-                </div>
+                
                 <button class="btn-main" onclick="saveToFirestore()">Simpan</button>
             </div>
             <div class="card">
@@ -178,13 +241,19 @@
             projectId: "tabungan-yasfin",
             storageBucket: "tabungan-yasfin.firebasestorage.app",
             messagingSenderId: "1023595912835",
-            appId: "1:1023595912835:web:18b91d83fbaee0d28805b6",
-            measurementId: "G-77DZ8FSCW3"
+            appId: "1:1023595912835:web:18b91d83fbaee0d28805b6"
         };
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const dbRef = collection(db, "transaksi");
+
+        let isMasked = false; 
+        let globalData = [];  
+
+        // SVG Mata (Terbuka dan Tertutup)
+        const eyeOpenSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`;
+        const eyeClosedSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>`;
 
         window.handleInput = (el) => {
             let val = el.value.replace(/[^,\d]/g, '').toString();
@@ -197,18 +266,31 @@
                 rupiah += separator + ribuan.join('.');
             }
             el.value = rupiah;
-            document.getElementById('clear-amount').style.display = el.value.length > 0 ? 'block' : 'none';
-        };
-
-        window.clearInput = () => {
-            const input = document.getElementById('amount');
-            input.value = '';
-            document.getElementById('clear-amount').style.display = 'none';
         };
 
         window.setAmount = (val) => {
             document.getElementById('amount').value = val.toLocaleString('id-ID');
-            document.getElementById('clear-amount').style.display = 'block';
+        };
+
+        window.toggleFields = () => {
+            const tipe = document.getElementById('jenis_transaksi').value;
+            const wrapUser = document.getElementById('wrapper_user');
+            const wrapBunga = document.getElementById('wrapper_bunga');
+            const wrapChips = document.getElementById('wrapper_chips');
+
+            if (tipe === 'nabung' || tipe === 'tarik') {
+                wrapUser.style.display = 'block';
+                wrapBunga.style.display = 'none';
+                wrapChips.style.display = 'flex';
+            } else if (tipe === 'buka_depo') {
+                wrapUser.style.display = 'none'; 
+                wrapBunga.style.display = 'none';
+                wrapChips.style.display = 'flex';
+            } else if (tipe === 'cair_depo') {
+                wrapUser.style.display = 'none'; 
+                wrapBunga.style.display = 'block'; 
+                wrapChips.style.display = 'none';
+            }
         };
 
         window.openModal = () => document.getElementById('transfer-modal').style.display = 'flex';
@@ -234,40 +316,64 @@
             } else { alert("Akses ditolak"); }
         };
 
-        window.saveToFirestore = async () => {
-            const amountInput = document.getElementById('amount').value;
-            const cleanVal = amountInput.replace(/\./g, '');
-            const amt = parseInt(cleanVal);
-            const user = document.getElementById('user').value;
-            const type = document.getElementById('type').value;
+        window.toggleSaldo = () => {
+            isMasked = !isMasked;
+            document.getElementById('eye-icon-container').innerHTML = isMasked ? eyeClosedSVG : eyeOpenSVG;
+            updateUI(globalData);
+        };
 
-            if(!amt || !user || !type) return alert("Lengkapi data dulu");
+        window.saveToFirestore = async () => {
+            const tipe = document.getElementById('jenis_transaksi').value;
+            const amtStr = document.getElementById('amount').value.replace(/\./g, '');
+            const amt = parseInt(amtStr);
+            const user = document.getElementById('user').value;
+            
+            const bungaStr = document.getElementById('bunga').value.replace(/\./g, '');
+            const bunga = bungaStr ? parseInt(bungaStr) : 0;
+
+            if(!amt) return alert("Lengkapi data dulu");
+            if((tipe === 'nabung' || tipe === 'tarik') && !user) return alert("Lengkapi data dulu");
+
+            const btn = event.target;
+            const originalText = btn.innerText;
+            btn.innerText = "Menyimpan...";
+            btn.style.opacity = "0.7";
 
             try {
-                await addDoc(dbRef, { 
-                    amount: type === 'out' ? -amt : amt, 
-                    user: user, 
+                const docData = {
+                    type: tipe,
+                    amount: amt,
                     date: new Date().toLocaleDateString('id-ID', {day:'numeric', month:'short'}),
-                    timestamp: Date.now() 
-                });
+                    timestamp: Date.now()
+                };
+
+                if (tipe === 'nabung' || tipe === 'tarik') docData.user = user;
+                if (tipe === 'cair_depo') docData.bunga = bunga;
+
+                await addDoc(dbRef, docData);
                 
                 alert("Berhasil! Semangat terus ya nabungnya buat kita.");
-                clearInput();
+                document.getElementById('amount').value = '';
+                document.getElementById('bunga').value = '';
                 document.getElementById('user').selectedIndex = 0;
-                document.getElementById('type').selectedIndex = 0;
+                document.getElementById('jenis_transaksi').selectedIndex = 0;
+                toggleFields();
             } catch (error) {
                 alert("Gagal simpan: " + error.message);
+            } finally {
+                btn.innerText = originalText;
+                btn.style.opacity = "1";
             }
         };
 
         function loadData() {
             const q = query(dbRef, orderBy("timestamp", "desc"));
-            // onSnapshot menghandle realtime secara otomatis
             onSnapshot(q, (snapshot) => {
                 const allData = [];
                 snapshot.forEach((doc) => {
                     allData.push(doc.data());
                 });
+                globalData = allData;
                 updateUI(allData);
             });
         }
@@ -275,21 +381,78 @@
         let myChart;
         function updateUI(data) {
             const historyEl = document.getElementById('history');
-            let total = 0, yTotal = 0, aTotal = 0;
+            let tabungan = 0, deposito = 0;
+            let yTotal = 0, aTotal = 0; 
+            
             historyEl.innerHTML = '';
             
             data.forEach(t => {
-                total += t.amount;
-                if(t.user === 'yasfa') yTotal += t.amount;
-                else aTotal += t.amount;
-                
+                let badgeHtml = '';
+                let namaTampil = '';
+                let warnaNominal = '#4ade80';
+                let tandaTampil = '+';
+                let nominalTampil = t.amount;
+                let classNama = '';
+
+                if (t.type === 'nabung' || (t.amount > 0 && !t.type)) {
+                    tabungan += t.amount;
+                    if(t.user === 'yasfa') yTotal += t.amount; else aTotal += t.amount;
+                    
+                    namaTampil = t.user === 'yasfa' ? 'Yasfa' : 'afina cantik';
+                    classNama = t.user === 'yasfa' ? 'tag-yasfa' : 'tag-afina';
+                    badgeHtml = `<span class="badge b-in">Pemasukan</span>`;
+                } 
+                else if (t.type === 'tarik' || (t.amount < 0 && !t.type)) {
+                    let nilaiReal = Math.abs(t.amount);
+                    tabungan -= nilaiReal;
+                    if(t.user === 'yasfa') yTotal -= nilaiReal; else aTotal -= nilaiReal;
+                    
+                    namaTampil = t.user === 'yasfa' ? 'Yasfa' : 'afina cantik';
+                    classNama = t.user === 'yasfa' ? 'tag-yasfa' : 'tag-afina';
+                    badgeHtml = `<span class="badge b-out">Pengeluaran</span>`;
+                    warnaNominal = '#f87171'; tandaTampil = '-'; nominalTampil = nilaiReal;
+                }
+                else if (t.type === 'buka_depo') {
+                    tabungan -= t.amount;
+                    deposito += t.amount;
+                    
+                    namaTampil = 'Tabungan Gabungan'; classNama = 'tag-gabungan';
+                    badgeHtml = `<span class="badge b-depo">Buka Deposito</span>`;
+                    warnaNominal = '#facc15'; tandaTampil = '-';
+                }
+                else if (t.type === 'cair_depo') {
+                    const profit = t.bunga || 0;
+                    deposito -= t.amount;
+                    tabungan += (t.amount + profit);
+                    
+                    namaTampil = 'Dari Deposito'; classNama = 'tag-gabungan';
+                    badgeHtml = `<span class="badge b-in">Cair + Bunga</span>`;
+                    nominalTampil = t.amount + profit; 
+                }
+
                 const item = document.createElement('div');
                 item.style.cssText = "display:flex; justify-content:space-between; padding:12px; border-bottom:1px solid rgba(255,255,255,0.05); font-size:0.9rem;";
-                item.innerHTML = `<span><b class="tag-${t.user}">${t.user === 'yasfa' ? 'Yasfa' : 'afina cantik'}</b><br><small style="opacity:0.5">${t.date}</small></span><span style="color:${t.amount >= 0 ? '#4ade80' : '#f87171'}; font-weight:bold;">${t.amount >= 0 ? '+' : ''}${t.amount.toLocaleString('id-ID')}</span>`;
+                
+                let textBunga = (t.type === 'cair_depo' && t.bunga > 0) ? `(Termasuk bunga Rp ${t.bunga.toLocaleString('id-ID')})` : '';
+
+                item.innerHTML = `
+                    <span>
+                        <b class="${classNama}">${namaTampil}</b> ${badgeHtml}<br>
+                        <small style="opacity:0.5">${t.date} <br>${textBunga}</small>
+                    </span>
+                    <span style="color:${warnaNominal}; font-weight:bold;">
+                        ${tandaTampil}${nominalTampil.toLocaleString('id-ID')}
+                    </span>`;
                 historyEl.appendChild(item);
             });
 
-            document.getElementById('totalBalance').innerText = `Rp ${total.toLocaleString('id-ID')}`;
+            const totalGabungan = tabungan + deposito;
+            const maskText = "Rp ***.***";
+            
+            document.getElementById('totalBalance').innerText = isMasked ? maskText : `Rp ${totalGabungan.toLocaleString('id-ID')}`;
+            document.getElementById('tabunganTotal').innerText = isMasked ? maskText : `Rp ${tabungan.toLocaleString('id-ID')}`;
+            document.getElementById('depositoTotal').innerText = isMasked ? maskText : `Rp ${deposito.toLocaleString('id-ID')}`;
+
             document.getElementById('yasfaTotal').innerText = `Rp ${yTotal.toLocaleString('id-ID')}`;
             document.getElementById('afinaTotal').innerText = `Rp ${aTotal.toLocaleString('id-ID')}`;
 

@@ -19,12 +19,10 @@
             color: white; min-height: 100vh; display: flex; justify-content: center; align-items: center; overflow-x: hidden;
         }
 
-        /* --- ANIMATIONS --- */
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         @keyframes pulseGlow { 0% { box-shadow: 0 0 15px rgba(244,114,182,0.2); } 50% { box-shadow: 0 0 25px rgba(59,130,246,0.5); } 100% { box-shadow: 0 0 15px rgba(244,114,182,0.2); } }
 
-        /* --- LANDING PAGE & MODAL --- */
         #landing-page { text-align: center; padding: 2rem; max-width: 600px; animation: fadeIn 1s ease-in; }
         .hero-title { font-size: 3rem; font-weight: 800; margin-bottom: 1rem; letter-spacing: -2px; }
         .hero-title span { background: linear-gradient(90deg, var(--yasfa-color), var(--afina-color)); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -44,7 +42,6 @@
             margin: 1.5rem 0; border: 1px dashed var(--yasfa-color); cursor: pointer; transition: 0.3s;
         }
 
-        /* --- YASFIN MAIN CARD --- */
         .yasfin-card {
             background: linear-gradient(135deg, var(--yasfa-color), var(--afina-color));
             border-radius: 20px;
@@ -65,12 +62,10 @@
         .yasfin-card .bottom-section .half p { font-size: 0.8rem; opacity: 0.9; margin-bottom: 3px; font-weight: 600;}
         .yasfin-card .bottom-section .half h3 { font-size: 1.1rem; margin-bottom: 3px; }
         
-        /* Eye Icon Style Minimalis */
         .eye-icon { cursor: pointer; opacity: 0.8; transition: 0.3s; display: flex; align-items: center; }
         .eye-icon:hover { opacity: 1; transform: scale(1.1); }
         .eye-icon svg { width: 18px; height: 18px; }
 
-        /* --- UI COMPONENTS --- */
         .btn-main { 
             width: 100%; padding: 16px; border-radius: 16px; border: none; 
             background: linear-gradient(90deg, var(--yasfa-color), var(--afina-color)); 
@@ -102,13 +97,11 @@
         .tag-afina { color: var(--afina-color); font-weight: 800; }
         .tag-gabungan { color: #facc15; font-weight: 800; }
         
-        /* Badges riwayat */
         .badge { padding: 3px 8px; border-radius: 6px; font-size: 0.65rem; font-weight: bold; margin-left: 5px; text-transform: uppercase; }
         .b-in { background: rgba(74, 222, 128, 0.2); color: #4ade80; }
         .b-out { background: rgba(248, 113, 113, 0.2); color: #f87171; }
         .b-depo { background: rgba(250, 204, 21, 0.2); color: #facc15; }
         
-        /* User Stats under card */
         .user-stats { display: flex; justify-content: center; gap: 40px; margin-bottom: 1.5rem; animation: fadeIn 1s ease-in; }
         .user-stats p { font-size: 1.2rem; margin-top: 5px; }
     </style>
@@ -131,8 +124,7 @@
                 <p style="font-size: 0.7rem; color: var(--afina-color); margin-top: 5px; font-weight: bold;">A/N Muhammad Yasyfa Al Fachrezi</p>
             </div>
             <button class="btn-main" style="background: rgba(255,255,255,0.1); margin-bottom: 12px; color: white;" onclick="alert('Ayo transfer dulu ya, biar tabungan kita makin banyak')">Belum Transfer</button>
-            
-            <!-- Tombol SUDAH TRANSFER disamakan warnanya dengan tombol utama -->
+
             <button class="btn-main" onclick="showLogin()">Sudah Transfer</button>
             
             <p style="margin-top: 20px; font-size: 0.8rem; cursor: pointer; opacity: 0.5;" onclick="closeModal()">Nanti Saja</p>
@@ -149,10 +141,8 @@
     <div id="dashboard">
         <button style="position: fixed; top: 20px; right: 20px; padding: 10px 15px; border-radius: 12px; background: rgba(248,113,113,0.15); color: #f87171; border: 1px solid rgba(248,113,113,0.3); cursor: pointer; font-weight: 800; backdrop-filter: blur(10px); z-index: 100;" onclick="location.reload()">Logout</button>
         
-        <!-- YASFIN CARD UI -->
         <div class="yasfin-card">
             <div class="top-section">
-                <!-- Icon Mata Minimalis (SVG) -->
                 <p>Total Saldo 
                     <span class="eye-icon" onclick="toggleSaldo()" id="eye-icon-container">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -251,7 +241,6 @@
         let isMasked = false; 
         let globalData = [];  
 
-        // SVG Mata (Terbuka dan Tertutup)
         const eyeOpenSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`;
         const eyeClosedSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>`;
 

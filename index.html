@@ -1,104 +1,32 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Masa Depan Yasfa dan afina cantik</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        :root {
-            --yasfa-color: #3b82f6;
-            --afina-color: #f472b6;
-            --seabank-orange: #ff5722;
-            --glass: rgba(255, 255, 255, 0.1);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { 
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); 
-            color: white; min-height: 100vh; display: flex; justify-content: center; align-items: center; overflow-x: hidden;
-        }
-
-        /* --- LANDING PAGE --- */
-        #landing-page { text-align: center; padding: 2rem; max-width: 600px; animation: fadeIn 1s ease-in; }
-        .hero-title { font-size: 3rem; font-weight: 800; margin-bottom: 1rem; letter-spacing: -2px; }
-        .hero-title span { background: linear-gradient(90deg, var(--yasfa-color), var(--afina-color)); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero-subtitle { font-size: 1rem; opacity: 0.7; margin-bottom: 2.5rem; }
-
-        /* --- MODAL TRANSFER --- */
-        #transfer-modal {
-            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(12px); z-index: 200; align-items: center; justify-content: center;
-        }
-        .modal-content {
-            background: #1e293b; padding: 2.5rem 2rem; border-radius: 30px; border: 1px solid var(--seabank-orange);
-            width: 90%; max-width: 400px; text-align: center; box-shadow: 0 0 40px rgba(255, 87, 34, 0.2);
-            animation: slideUp 0.4s ease-out;
-        }
-        .rekening-box {
-            background: rgba(255, 87, 34, 0.1); padding: 1.2rem; border-radius: 15px; 
-            margin: 1.5rem 0; border: 1px dashed var(--seabank-orange); cursor: pointer; transition: 0.3s;
-        }
-
-        /* --- BUTTONS --- */
-        .btn-main { 
-            width: 100%; padding: 16px; border-radius: 16px; border: none; 
-            background: linear-gradient(90deg, var(--yasfa-color), var(--afina-color)); 
-            color: white; font-weight: 800; cursor: pointer; transition: 0.3s; text-transform: uppercase;
-        }
-        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(244, 114, 182, 0.3); }
-        
-        #login-screen, #dashboard { display: none; width: 90%; max-width: 400px; }
-        #dashboard { max-width: 1000px; padding: 2rem 0; }
-
-        /* --- GLASS INPUT & SELECT --- */
-        input, select { 
-            width: 100%; padding: 14px; border-radius: 14px; 
-            border: 1px solid rgba(255,255,255,0.1); 
-            background: rgba(255,255,255,0.05); color: white; outline: none; 
-            appearance: none; -webkit-appearance: none; margin-bottom: 1rem;
-            backdrop-filter: blur(10px);
-        }
-
-        /* Tampilan Option agar tidak putih */
-        select option {
-            background: #1e293b; 
-            color: white;
-            padding: 10px;
-        }
-
-        .select-wrapper { position: relative; }
-        .select-wrapper::after {
-            content: '▼'; font-size: 0.7rem; position: absolute;
-            right: 15px; top: 22px; pointer-events: none; opacity: 0.4;
-        }
-
-        .card { background: var(--glass); backdrop-filter: blur(15px); padding: 1.5rem; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 1rem; }
-        .tag-yasfa { color: var(--yasfa-color); font-weight: 800; }
-        .tag-afina { color: var(--afina-color); font-weight: 800; }
-        
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Masa Depan Yasfa dan afinaaa cantikkk</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Memanggil file CSS yang sudah dipisah -->
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="blob b1"></div><div class="blob b2"></div>
 
+<!-- 1. LANDING PAGE -->
 <div id="landing-page">
   <div class="phone">
     <div class="phone-top">
       <svg class="mascot" viewBox="0 0 240 290" stroke-linecap="round" stroke-linejoin="round">
-        <defs><g id="coin"><circle r="14" fill="#f472b6" stroke="#111827" stroke-width="3"/><circle r="8" fill="none" stroke="#fbcfe8" stroke-width="2.5"/></g></defs>
-        <path d="M188 30l12-12M200 50l20-6M206 72l16 3" stroke="#2563eb" stroke-width="5" fill="none"/>
-        <path d="M176 22l4-14M214 28l8-10" stroke="#ec4899" stroke-width="5" fill="none"/>
+        <defs><g id="coin"><circle r="14" fill="#f472b6" stroke="#111827" stroke-width="3"/><circle r="10.5" fill="none" stroke="#fbcfe8" stroke-width="1.5"/><text y="5.2" text-anchor="middle" font-size="14" font-weight="900" font-family="Plus Jakarta Sans,sans-serif" fill="#fff" stroke="#be185d" stroke-width=".8" paint-order="stroke">$</text></g></defs>
+        <path class="sp" d="M188 30l12-12M200 50l20-6M206 72l16 3" stroke="#2563eb" stroke-width="5" fill="none"/>
+        <path class="sp" style="animation-delay:.8s" d="M176 22l4-14M214 28l8-10" stroke="#ec4899" stroke-width="5" fill="none"/>
         <g class="float">
           <path d="M98 228v32M134 228v32" stroke="#111827" stroke-width="9" fill="none"/>
           <ellipse cx="92" cy="268" rx="21" ry="9" fill="#ec4899" stroke="#111827" stroke-width="3"/>
           <ellipse cx="142" cy="268" rx="21" ry="9" fill="#3b82f6" stroke="#111827" stroke-width="3"/>
-          <path d="M54 80H166Q180 80 180 96V190Q180 230 140 230H80Q40 230 40 190V96Q40 80 54 80Z" fill="#c7d2fe" stroke="#111827" stroke-width="4"/>
-          <use href="#coin" x="68" y="206"/><use href="#coin" x="98" y="212"/><use href="#coin" x="128" y="210"/><use href="#coin" x="156" y="203"/>
-          <use href="#coin" x="82" y="182"/><use href="#coin" x="113" y="187"/><use href="#coin" x="143" y="180"/>
+          <g class="jar"><path d="M54 80H166Q180 80 180 96V190Q180 230 140 230H80Q40 230 40 190V96Q40 80 54 80Z" fill="#c7d2fe" stroke="#111827" stroke-width="4"/>
+          <use class="jc" href="#coin" x="68" y="206"/><use class="jc" href="#coin" x="98" y="212"/><use class="jc" href="#coin" x="128" y="210"/><use class="jc" href="#coin" x="156" y="203"/>
+          <use class="jc" href="#coin" x="82" y="182"/><use class="jc" href="#coin" x="113" y="187"/><use class="jc" href="#coin" x="143" y="180"/>
           <rect x="46" y="64" width="128" height="20" rx="10" fill="#818cf8" stroke="#111827" stroke-width="4"/>
           <g class="eyes">
             <circle cx="86" cy="118" r="20" fill="#fff" stroke="#111827" stroke-width="4"/><circle cx="136" cy="118" r="20" fill="#fff" stroke="#111827" stroke-width="4"/>
@@ -106,84 +34,133 @@
             <path class="tw" d="M86 109l2.5 6 6 2.5-6 2.5-2.5 6-2.5-6-6-2.5 6-2.5z" fill="#fff"/>
             <path class="tw" d="M136 109l2.5 6 6 2.5-6 2.5-2.5 6-2.5-6-6-2.5 6-2.5z" fill="#fff"/>
           </g>
-          <path d="M103 149q8 10 16 0z" fill="#fb7185" stroke="#111827" stroke-width="3"/>
-          <path d="M42 132C-10 138-14 62 52 48" stroke="#111827" stroke-width="10" fill="none"/>
-          <circle cx="58" cy="44" r="10" fill="#fff" stroke="#111827" stroke-width="3"/>
-          <use class="drop" href="#coin" x="86" y="30"/>
+          <path d="M103 149q8 10 16 0z" fill="#fb7185" stroke="#111827" stroke-width="3"/></g>
+          <g class="arm"><path d="M42 132C-10 138-14 62 52 48" stroke="#111827" stroke-width="10" fill="none"/>
+          <circle cx="58" cy="44" r="10" fill="#fff" stroke="#111827" stroke-width="3"/></g>
+          <g class="drop"><use href="#coin" x="86" y="30"/></g>
           <path d="M180 136C226 134 232 186 184 183" stroke="#111827" stroke-width="10" fill="none"/>
           <circle cx="180" cy="183" r="10" fill="#fff" stroke="#111827" stroke-width="3"/>
         </g>
       </svg>
     </div>
     <div class="phone-bottom">
-        <h1 class="hero-title">Membangun<br>Masa Depan<br><span><i>Bersama</i></span></h1>
-        <p class="hero-subtitle">Sesuatu yang besar dimulai dari langkah kecil yang dilakukan bersama-sama.</p>
-        <button class="btn-pink shine" onclick="openModal()">Mulai Menabung</button>
+      <h1 class="hero-title">Membangun<br>Masa Depan<br><span><i>Bersama</i></span></h1>
+      <p class="hero-subtitle">Sesuatu yang besar dimulai dari langkah kecil yang dilakukan bersama-sama.</p>
+      <button class="btn-pink shine" onclick="openModal()">Mulai Menabung</button>
     </div>
   </div>
 </div>
 
-    <div id="transfer-modal">
-        <div class="modal-content">
-            <h2 style="color: var(--seabank-orange); margin-bottom: 10px;">Cek Saldo</h2>
-            <p style="font-size: 0.9rem; opacity: 0.8;">Pastikan kamu sudah transfer ke rekening SeaBank bersama sebelum mencatat.</p>
-            
-            <div class="rekening-box" onclick="copyRek()">
-                <small style="opacity: 0.6;">Klik untuk salin no. rekening</small>
-                <h3 id="no-rek" style="margin-top: 5px; letter-spacing: 1px;">901317404210</h3>
-                <p style="font-size: 0.7rem; color: var(--afina-color); margin-top: 5px; font-weight: bold;">A/N Muhammad Yasyfa Al Fachrezi</p>
-            </div>
-
-            <button class="btn-main" style="background: var(--seabank-orange); margin-bottom: 12px;" onclick="alert('Ayo transfer dulu ya, biar tabungan kita makin banyak')">Belum Transfer</button>
-            <button class="btn-main" style="background: #4ade80;" onclick="showLogin()">Sudah Transfer</button>
-            <p style="margin-top: 20px; font-size: 0.8rem; cursor: pointer; opacity: 0.5;" onclick="closeModal()">Nanti Saja</p>
-        </div>
+<!-- 2. MODAL CEK SALDO -->
+<div id="transfer-modal">
+  <div class="modal-content">
+    <h2 style="margin-bottom:10px;font-weight:900;text-transform:uppercase">Cek Saldo</h2>
+    <p style="font-size:.95rem;font-weight:600;color:#6b7280">Pastikan kamu sudah transfer ke rekening bersama sebelum mencatat.</p>
+    <div class="rekening-box" onclick="copyRek()">
+      <small style="font-weight:700;text-transform:uppercase;color:#6b7280">Klik salin no. rekening</small>
+      <h3 id="no-rek" style="margin-top:8px;letter-spacing:1px;font-size:1.5rem;font-weight:900">901317404210</h3>
+      <p style="font-size:.8rem;margin-top:5px;font-weight:700;color:var(--pink)">A/N Muhammad Yasyfa Al Fachrezi</p>
     </div>
+    <button class="btn-main" style="background:var(--gray-bg);color:var(--dark);margin-bottom:12px;box-shadow:none" onclick="alert('Ayo transfer dulu ya, biar tabungan kita makin banyak')">Belum Transfer</button>
+    <button class="btn-main" onclick="showLogin()">Sudah Transfer</button>
+    <p style="margin-top:24px;font-size:.9rem;cursor:pointer;font-weight:700;color:#6b7280" onclick="closeModal()">Nanti Saja</p>
+  </div>
+</div>
 
-    <div id="login-screen" class="card" style="text-align: center;">
-        <h2 style="margin-bottom: 1.5rem;">Yasfin Bank</h2>
-        <input type="text" id="username" placeholder="Username">
-        <input type="password" id="password" placeholder="Password">
-        <button class="btn-main" onclick="login()">Buka Akses</button>
+<!-- 3. LOGIN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="3"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
+    <h2>Yasfinn Bank</h2>
+    <p class="login-sub">Masuk untuk membuka tabungan kita</p>
+    <div class="field">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+      <!-- Tekan enter otomatis fokus ke password -->
+      <input type="text" id="username" placeholder="Username" autocomplete="off" onkeypress="if(event.key==='Enter') document.getElementById('password').focus()">
     </div>
+    <div class="field">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="11" width="16" height="10" rx="3"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+      <input type="password" id="password" placeholder="Password" onkeypress="if(event.key==='Enter')login()">
+      <span class="peek" onclick="togglePass()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>
+    </div>
+    <button class="btn-grad shine" onclick="login()">Buka Akses</button>
+  </div>
+</div>
 
-    <div id="dashboard">
-        <button style="position: fixed; top: 20px; right: 20px; padding: 10px 15px; border-radius: 12px; background: rgba(248,113,113,0.15); color: #f87171; border: 1px solid rgba(248,113,113,0.3); cursor: pointer; font-weight: 800; backdrop-filter: blur(10px); z-index: 100;" onclick="location.reload()">Logout</button>
-        
-        <div class="card" style="text-align: center; background: linear-gradient(45deg, rgba(59,130,246,0.1), rgba(244,114,182,0.1));">
-            <p>Saldo Gabungan</p>
-            <h1 style="font-size: 3rem; font-weight: 800; margin: 10px 0;" id="totalBalance">Rp 0</h1>
-            <div style="display: flex; justify-content: center; gap: 40px;">
-                <div><small>Yasfa</small><p id="yasfaTotal" class="tag-yasfa">Rp 0</p></div>
-                <div><small>afina cantik</small><p id="afinaTotal" class="tag-afina">Rp 0</p></div>
-            </div>
-        </div>
+<!-- 4. DASHBOARD -->
+<div id="dashboard">
+  <div class="dash-head" style="--i:0">
+    <div class="who"><div class="avatar">YA</div><div><small>Selamat datang</small><b>Yasfinn𓍯𓂃𓏧♡</b></div></div>
+    <button class="btn-logout" onclick="location.reload()">Logout</button>
+  </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
-            <div class="card">
-                <h3>Input Transaksi</h3>
-                <input type="number" id="amount" placeholder="Nominal Rp" style="margin-top: 1rem;">
-                <div class="select-wrapper">
-                    <select id="user">
-                        <option value="" selected disabled>Pilih Penabung</option>
-                        <option value="yasfa">Yasfa</option>
-                        <option value="afina">afina cantik</option>
-                    </select>
-                </div>
-                <div class="select-wrapper">
-                    <select id="type">
-                        <option value="" selected disabled>Jenis Transaksi</option>
-                        <option value="in">Pemasukan (+)</option>
-                        <option value="out">Pengeluaran (-)</option>
-                    </select>
-                </div>
-                <button class="btn-main" onclick="saveToFirebase()">Simpan</button>
-            </div>
-            <div class="card">
-                <h3>Statistik</h3>
-                <div style="height: 200px;"><canvas id="savingsChart"></canvas></div>
-            </div>
+  <div class="bank-card" style="--i:1">
+    <div class="bc-top">
+      <span class="bc-logo" style="font-style: normal; display: flex; align-items: center; gap: 6px;">
+        YASFINN
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="#fff">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+      </span>
+      <button class="eye-pill" onclick="toggleSaldo()">
+        <span class="eye-circle" id="eye-icon-container"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></span>
+        Saldo
+      </button>
+    </div>
+    <div class="bc-body">
+      <div class="bc-left">
+        <small>Total Saldo</small>
+        <svg class="spark" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12 7-1 11-5 12-12z"/></svg>
+        <h1 id="totalBalance">Rp 0</h1>
+        <div class="bc-num">**** **** **** 4210</div>
+        <div class="bc-split">
+          <div><small>Tabungan</small><b id="tabunganTotal">Rp 0</b></div>
+          <div style="text-align:right"><small>Deposito</small><b id="depositoTotal">Rp 0</b></div>
         </div>
+      </div>
+      <div class="bc-panel"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M6 8.5a5 5 0 0 1 0 7"/><path d="M10 6a9 9 0 0 1 0 12"/><path d="M14 3.5a13 13 0 0 1 0 17"/></svg></div>
+    </div>
+  </div>
+
+  <div class="user-stats" style="--i:2">
+    <div class="s-yasfa"><small>yasfa gantengg</small><p id="yasfaTotal" class="tag-yasfa">Rp 0</p></div>
+    <div class="s-afina"><small>afinaaa cantikkk</small><p id="afinaTotal" class="tag-afina">Rp 0</p></div>
+  </div>
+
+  <div class="card" style="--i:3">
+    <h3>Input Transaksi</h3>
+    <div class="select-wrapper">
+      <select id="jenis_transaksi" onchange="toggleFields()">
+        <option value="nabung" selected>Pemasukan (+)</option>
+        <option value="tarik">Pengeluaran (-)</option>
+        <option value="buka_depo">Buka Deposito</option>
+        <option value="cair_depo">Cairkan Deposito</option>
+      </select>
+    </div>
+    <div class="input-container"><input type="text" id="amount" placeholder="Nominal Rp" oninput="handleInput(this)"></div>
+    <div class="input-container" id="wrapper_bunga" style="display:none"><input type="text" id="bunga" placeholder="Bunga Rp (Opsional)" oninput="handleInput(this)"></div>
+    <div class="chips-container" id="wrapper_chips">
+      <div class="chip" onclick="setAmount(50000)">50.000</div>
+      <div class="chip" onclick="setAmount(100000)">100.000</div>
+      <div class="chip" onclick="setAmount(150000)">150.000</div>
+      <div class="chip" onclick="setAmount(200000)">200.000</div>
+      <div class="chip" onclick="setAmount(500000)">500.000</div>
+      <div class="chip" onclick="setAmount(1000000)">1.000.000</div>
+    </div>
+    <div class="select-wrapper" id="wrapper_user">
+      <select id="user">
+        <option value="" selected disabled>Pilih Penabung</option>
+        <option value="yasfa">yasfa gantengg</option>
+        <option value="afina">afinaaa cantikkk</option>
+      </select>
+    </div>
+    <button class="btn-main" onclick="saveToFirestore()">Simpan Data</button>
+  </div>
+
+  <div class="card" style="--i:4">
+    <h3>Statistik</h3>
+    <div style="height:200px"><canvas id="savingsChart"></canvas></div>
+  </div>
 
   <div class="card" style="--i:5;margin-bottom:2rem">
     <h3>Riwayat</h3>
@@ -191,32 +168,63 @@
   </div>
 </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+<!-- JAVASCRIPT DIMASUKKAN KEMBALI KE SINI AGAR TIDAK DIBLOKIR BROWSER -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyAXHfN62hjsbkrMQSFHVxE2dZBztiCs2CA",
-            authDomain: "tabungan-yasfin.firebaseapp.com",
-            databaseURL: "https://tabungan-yasfin-default-rtdb.asia-southeast1.firebasedatabase.app/",
-            projectId: "tabungan-yasfin",
-            storageBucket: "tabungan-yasfin.firebasestorage.app",
-            messagingSenderId: "1023595912835",
-            appId: "1:1023595912835:web:18b91d83fbaee0d28805b6"
-        };
+const firebaseConfig = {
+  apiKey: "AIzaSyAXHfN62hjsbkrMQSFHVxE2dZBztiCs2CA",
+  authDomain: "tabungan-yasfin.firebaseapp.com",
+  databaseURL: "https://tabungan-yasfin-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "tabungan-yasfin",
+  storageBucket: "tabungan-yasfin.firebasestorage.app",
+  messagingSenderId: "1023595912835",
+  appId: "1:1023595912835:web:18b91d83fbaee0d28805b6"
+};
 
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-        const dbRef = ref(db, 'transaksi');
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const dbRef = collection(db, "transaksi");
 
-        window.openModal = () => document.getElementById('transfer-modal').style.display = 'flex';
-        window.closeModal = () => document.getElementById('transfer-modal').style.display = 'none';
-        
-        window.copyRek = () => {
-            const rek = document.getElementById('no-rek').innerText;
-            navigator.clipboard.writeText(rek);
-            alert("Nomor rekening berhasil disalin");
-        };
+let isMasked = false;
+let globalData = [];
+
+const eyeOpenSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`;
+const eyeClosedSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>`;
+
+window.handleInput = (el) => {
+  let val = el.value.replace(/[^,\d]/g, '').toString();
+  let split = val.split(',');
+  let sisa = split[0].length % 3;
+  let rupiah = split[0].substr(0, sisa);
+  let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+  if (ribuan) rupiah += (sisa ? '.' : '') + ribuan.join('.');
+  el.value = rupiah;
+};
+
+window.setAmount = (val) => { document.getElementById('amount').value = val.toLocaleString('id-ID'); };
+
+window.toggleFields = () => {
+  const tipe = document.getElementById('jenis_transaksi').value;
+  const wrapUser = document.getElementById('wrapper_user');
+  const wrapBunga = document.getElementById('wrapper_bunga');
+  const wrapChips = document.getElementById('wrapper_chips');
+  if (tipe === 'nabung' || tipe === 'tarik') {
+    wrapUser.style.display = 'block'; wrapBunga.style.display = 'none'; wrapChips.style.display = 'flex';
+  } else if (tipe === 'buka_depo') {
+    wrapUser.style.display = 'none'; wrapBunga.style.display = 'none'; wrapChips.style.display = 'flex';
+  } else if (tipe === 'cair_depo') {
+    wrapUser.style.display = 'none'; wrapBunga.style.display = 'block'; wrapChips.style.display = 'none';
+  }
+};
+
+window.openModal = () => document.getElementById('transfer-modal').style.display = 'flex';
+window.closeModal = () => document.getElementById('transfer-modal').style.display = 'none';
+window.copyRek = () => {
+  navigator.clipboard.writeText(document.getElementById('no-rek').innerText);
+  alert("Nomor rekening berhasil disalin");
+};
 
 window.showLogin = () => {
   closeModal();
@@ -229,74 +237,152 @@ window.togglePass = () => {
   p.type = p.type === 'password' ? 'text' : 'password';
 };
 
-        window.login = () => {
-            const u = document.getElementById('username').value.toLowerCase();
-            const p = document.getElementById('password').value;
-            if(u === "yasfin" && p === "091019") {
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
-                loadData();
-            } else { alert("Akses ditolak"); }
-        };
+window.login = () => {
+  const u = document.getElementById('username').value.toLowerCase();
+  const p = document.getElementById('password').value;
+  if (u === "yasfin" && p === "091019") {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    loadData();
+  } else {
+    const c = document.querySelector('.login-card');
+    c.classList.remove('shake'); void c.offsetWidth; c.classList.add('shake');
+    setTimeout(() => alert("Akses ditolak"), 350);
+  }
+};
 
-        window.saveToFirebase = () => {
-            const amt = parseInt(document.getElementById('amount').value);
-            const user = document.getElementById('user').value;
-            const type = document.getElementById('type').value;
-            if(!amt || !user || !type) return alert("Lengkapi data dulu");
+window.toggleSaldo = () => {
+  isMasked = !isMasked;
+  document.getElementById('eye-icon-container').innerHTML = isMasked ? eyeClosedSVG : eyeOpenSVG;
+  updateUI(globalData);
+};
 
-            push(dbRef, {
-                amount: type === 'out' ? -amt : amt,
-                user: user,
-                date: new Date().toLocaleDateString('id-ID', {day:'numeric', month:'short'}),
-                timestamp: Date.now()
-            });
-            document.getElementById('amount').value = '';
-            document.getElementById('user').selectedIndex = 0;
-            document.getElementById('type').selectedIndex = 0;
-        };
+window.saveToFirestore = async () => {
+  const tipe = document.getElementById('jenis_transaksi').value;
+  const amt = parseInt(document.getElementById('amount').value.replace(/\./g, ''));
+  const user = document.getElementById('user').value;
+  const bungaStr = document.getElementById('bunga').value.replace(/\./g, '');
+  const bunga = bungaStr ? parseInt(bungaStr) : 0;
 
-        function loadData() {
-            onValue(dbRef, (snapshot) => {
-                const data = snapshot.val();
-                const list = [];
-                for(let id in data) list.push(data[id]);
-                updateUI(list);
-            });
-        }
+  if (!amt) return alert("Lengkapi data dulu");
+  if ((tipe === 'nabung' || tipe === 'tarik') && !user) return alert("Lengkapi data dulu");
 
-        let myChart;
-        function updateUI(data) {
-            const historyEl = document.getElementById('history');
-            let total = 0, yTotal = 0, aTotal = 0;
-            historyEl.innerHTML = '';
-            const sortedData = [...data].sort((a,b) => b.timestamp - a.timestamp);
+  const btn = event.target;
+  const originalText = btn.innerText;
+  btn.innerText = "Menyimpan...";
 
-            sortedData.forEach(t => {
-                total += t.amount;
-                if(t.user === 'yasfa') yTotal += t.amount;
-                else aTotal += t.amount;
-                const item = document.createElement('div');
-                item.style.cssText = "display:flex; justify-content:space-between; padding:12px; border-bottom:1px solid rgba(255,255,255,0.05); font-size:0.9rem;";
-                item.innerHTML = `<span><b class="tag-${t.user}">${t.user === 'yasfa' ? 'Yasfa' : 'afina cantik'}</b><br><small style="opacity:0.5">${t.date}</small></span><span style="color:${t.amount >= 0 ? '#4ade80' : '#f87171'}; font-weight:bold;">${t.amount >= 0 ? '+' : ''}${t.amount.toLocaleString('id-ID')}</span>`;
-                historyEl.appendChild(item);
-            });
+  try {
+    const docData = {
+      type: tipe,
+      amount: amt,
+      date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }),
+      timestamp: Date.now()
+    };
+    if (tipe === 'nabung' || tipe === 'tarik') docData.user = user;
+    if (tipe === 'cair_depo') docData.bunga = bunga;
 
-            document.getElementById('totalBalance').innerText = `Rp ${total.toLocaleString('id-ID')}`;
-            document.getElementById('yasfaTotal').innerText = `Rp ${yTotal.toLocaleString('id-ID')}`;
-            document.getElementById('afinaTotal').innerText = `Rp ${aTotal.toLocaleString('id-ID')}`;
+    await addDoc(dbRef, docData);
 
-            const ctx = document.getElementById('savingsChart').getContext('2d');
-            if(myChart) myChart.destroy();
-            myChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Yasfa', 'afina cantik'],
-                    datasets: [{ data: [Math.max(0, yTotal), Math.max(0, aTotal)], backgroundColor: ['#3b82f6', '#f472b6'], borderWidth: 0 }]
-                },
-                options: { maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: 'white' } } } }
-            });
-        }
-    </script>
+    alert("Berhasil! Semangat terus ya nabungnya buat kita.");
+    document.getElementById('amount').value = '';
+    document.getElementById('bunga').value = '';
+    document.getElementById('user').selectedIndex = 0;
+    document.getElementById('jenis_transaksi').selectedIndex = 0;
+    toggleFields();
+  } catch (error) {
+    alert("Gagal simpan: " + error.message);
+  } finally {
+    btn.innerText = originalText;
+  }
+};
+
+function loadData() {
+  const q = query(dbRef, orderBy("timestamp", "desc"));
+  onSnapshot(q, (snapshot) => {
+    const allData = [];
+    snapshot.forEach((doc) => allData.push(doc.data()));
+    globalData = allData;
+    updateUI(allData);
+  });
+}
+
+let myChart;
+function updateUI(data) {
+  const historyEl = document.getElementById('history');
+  let tabungan = 0, deposito = 0, yTotal = 0, aTotal = 0;
+  historyEl.innerHTML = '';
+
+  data.forEach((t, i) => {
+    let badgeHtml = '', namaTampil = '', classNama = '';
+    let warnaNominal = '#2563eb';
+    let tandaTampil = '+';
+    let nominalTampil = t.amount;
+
+    if (t.type === 'nabung' || (t.amount > 0 && !t.type)) {
+      tabungan += t.amount;
+      if (t.user === 'yasfa') yTotal += t.amount; else aTotal += t.amount;
+      namaTampil = t.user === 'yasfa' ? 'yasfa gantengg' : 'afinaaa cantikkk';
+      classNama = t.user === 'yasfa' ? 'tag-yasfa' : 'tag-afina';
+      badgeHtml = `<span class="badge b-in">Pemasukan</span>`;
+    }
+    else if (t.type === 'tarik' || (t.amount < 0 && !t.type)) {
+      let nilaiReal = Math.abs(t.amount);
+      tabungan -= nilaiReal;
+      if (t.user === 'yasfa') yTotal -= nilaiReal; else aTotal -= nilaiReal;
+      namaTampil = t.user === 'yasfa' ? 'yasfa gantengg' : 'afinaaa cantikkk';
+      classNama = t.user === 'yasfa' ? 'tag-yasfa' : 'tag-afina';
+      badgeHtml = `<span class="badge b-out">Pengeluaran</span>`;
+      warnaNominal = '#ec4899'; tandaTampil = '-'; nominalTampil = nilaiReal;
+    }
+    else if (t.type === 'buka_depo') {
+      tabungan -= t.amount; deposito += t.amount;
+      namaTampil = 'Tabungan Gabungan'; classNama = 'tag-gabungan';
+      badgeHtml = `<span class="badge b-depo">Buka Deposito</span>`;
+      warnaNominal = '#111827'; tandaTampil = '-';
+    }
+    else if (t.type === 'cair_depo') {
+      const profit = t.bunga || 0;
+      deposito -= t.amount; tabungan += (t.amount + profit);
+      namaTampil = 'Dari Deposito'; classNama = 'tag-gabungan';
+      badgeHtml = `<span class="badge b-in">Cair + Bunga</span>`;
+      nominalTampil = t.amount + profit;
+    }
+
+    const item = document.createElement('div');
+    item.style.cssText = `display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid #f3f4f6;font-size:.95rem;font-weight:700;animation:slideIn .4s ${Math.min(i * 40, 400)}ms both`;
+    const textBunga = (t.type === 'cair_depo' && t.bunga > 0) ? `(Termasuk bunga Rp ${t.bunga.toLocaleString('id-ID')})` : '';
+    item.innerHTML = `
+      <span>
+        <b class="${classNama}">${namaTampil}</b> ${badgeHtml}<br>
+        <small style="font-weight:600;opacity:.6">${t.date} <br>${textBunga}</small>
+      </span>
+      <span style="color:${warnaNominal};font-weight:900;font-size:1.1rem">${tandaTampil}${nominalTampil.toLocaleString('id-ID')}</span>`;
+    historyEl.appendChild(item);
+  });
+
+  const mask = "Rp ***.***";
+  const fmt = (n) => isMasked ? mask : `Rp ${n.toLocaleString('id-ID')}`;
+  document.getElementById('totalBalance').innerText = fmt(tabungan + deposito);
+  document.getElementById('tabunganTotal').innerText = fmt(tabungan);
+  document.getElementById('depositoTotal').innerText = fmt(deposito);
+  document.getElementById('yasfaTotal').innerText = fmt(yTotal);
+  document.getElementById('afinaTotal').innerText = fmt(aTotal);
+
+  const ctx = document.getElementById('savingsChart').getContext('2d');
+  if (myChart) myChart.destroy();
+  myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['yasfa gantengg', 'afinaaa cantikkk'],
+      datasets: [{ data: [Math.max(0, yTotal), Math.max(0, aTotal)], backgroundColor: ['#2563eb', '#ec4899'], borderWidth: 0 }]
+    },
+    options: {
+      maintainAspectRatio: false,
+      animation: { animateRotate: true, duration: 1200 },
+      plugins: { legend: { position: 'bottom', labels: { color: 'black', font: { weight: 'bold', family: "'Plus Jakarta Sans', sans-serif" } } } }
+    }
+  });
+}
+</script>
 </body>
 </html>
